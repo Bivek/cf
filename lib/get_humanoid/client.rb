@@ -2,92 +2,67 @@ module GetHumanoid
   class Client
     include HTTParty
 
-    # HTTParty Params
     format :json
-    base_uri 'https://gethumanoid.com/v3'
-    # Does this work?
-    basic_auth @public_key, @private_key
+    base_uri 'http://gethumanoid.local:3001/v3'
+    #base_uri 'https://gethumanoid.com/v3'
 
-    # TODO: should I use this?
+    class ResponseParser < HTTParty::Parser
+      SupportedFormats = {
+        'application/json'       => :json,
+        'text/json'              => :json,
+        'application/javascript' => :json,
+        'text/javascript'        => :json,
+      }
+
+      def parse
+        decoded_body = MultiJson.decode(body)
+
+        # Catch and raise errors as necessary
+        if decoded_body.is_a?(Hash) and decoded_body['error']
+          raise GetHumanoid::Error, decoded_body
+        end
+
+        return decoded_body
+      end
+    end
+
     parser ResponseParser
 
     def initialize(config)
       @public_key  = config['public_key']
       @private_key = config['private_key']
-    end
 
-    # Convenience method for httparty, is this needed above?
-    def auth
-      {
-        :username => @public_key,
-        :password => @private_key,
-      }
+      self.class.basic_auth @public_key, @private_key
     end
 
     # Fetch a list of tasks
     def tasks
-      self.class.get('/tasks')
+      return self.class.get('/tasks').parsed_response.map do |task|
+        Task.new(
+          task['task_id'],
+          task['template_id'],
+          task['status'],
+          task['started_at']
+        )
+      end
     end
 
+    # Fetch a single task
     def task(task_id)
-      self.class.get("/tasks/%s" % task_id)
+      task = self.class.get("/tasks/%s" % task_id).parsed_response
 
-      # TODO
-      task = Task.new()
-
-      return task
+      return Task.new(
+        task['task_id'],
+        task['template_id'],
+        task['status'],
+        task['started_at']
+      )
     end
 
+    # Fetch a list of templates
     def templates
-      response = self.class.get('/templates')
-
-      # Todo
-      templates = []
-
-      return templates
-    end
-
-    # TODO, should I use HTTParty's parser?
-    def response_handler
-    end
-
-    class ResponseParser < HTTParty::Parser
-      def parse
-        # TODO: for now, this is a passthrough parser
-        body
-      end
-    end
-
-    class Task
-      attr_accessor :task_id, :template_id, :callback_url, :sandbox, :resources, :status, :started_at
-      
-      def initialize(template_id)
-        @template = template_id
-        @sandbox  = true
-      end
-
-      def post(client, resources)
-        # TODO: validation of stuff like callback_url
-
-        post_data = {
-          :template_id  => @template.template_id,
-          :callback_url => @callback_url,
-          :sandbox      => @sandbox,
-          :resources    => resources,
-        }
-
-        response = client.post('/v3/tasks', :query => post_data)
-
-        response_handler(response)
-      end
-    end
-
-    class Template
-      attr_accessor :template_id, :name
-
-      def initialize(template_id, name)
-        @template_id = template_id
-        @name        = name
+      return self.class.get('/templates').parsed_response.map do |template|
+        Template.new(template['template_id'], template['name'])
       end
     end
 

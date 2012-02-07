@@ -1,18 +1,14 @@
 module GetHumanoid
+  class Error < StandardError
+    attr_reader :code, :status
 
-  class GetHumanoidError
-    attr_reader :status, :error
+    def initialize(error)
+      # Pass the text message through, adding code and status
+      @code   = error['code']
+      @status = error['status']
 
-    def initialize(status, error)
-      @status = status
-      @error  = error
+      super error['error']
     end
+
   end
-
-  class BadRequest         < GetHumanoidError; end
-  class Unauthorized       < GetHumanoidError; end
-  class NotFound           < GetHumanoidError; end
-  class ServerError        < GetHumanoidError; end
-  class ServiceUnavailable < GetHumanoidError; end
-
 end

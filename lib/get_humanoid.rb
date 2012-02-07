@@ -1,3 +1,5 @@
 require "get_humanoid/version"
 require "get_humanoid/errors"
 require "get_humanoid/client"
+require "get_humanoid/task"
+require "get_humanoid/template"
