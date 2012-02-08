@@ -1,3 +1,5 @@
+require 'httparty'
+
 module GetHumanoid
   class Client
     include HTTParty
