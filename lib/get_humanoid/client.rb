@@ -4,9 +4,9 @@ module GetHumanoid
   class Client
     include HTTParty
 
+    attr_reader :callback_url
+
     format :json
-    base_uri 'http://gethumanoid.local:3001/v3'
-    #base_uri 'https://gethumanoid.com/v3'
 
     class ResponseParser < HTTParty::Parser
       SupportedFormats = {
@@ -31,10 +31,13 @@ module GetHumanoid
     parser ResponseParser
 
     def initialize(config)
-      @public_key  = config['public_key']
-      @private_key = config['private_key']
+      @public_key   = config['public_key']
+      @private_key  = config['private_key']
+      @path         = config['path'] || 'https://gethumanoid.com/v3'
+      @callback_url = config['callback_url']
 
       self.class.basic_auth @public_key, @private_key
+      self.class.base_uri @path
     end
 
     # Fetch a list of tasks
