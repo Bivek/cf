@@ -1,6 +1,6 @@
 require 'httparty'
 
-module GetHumanoid
+module CF
   class Client
     include HTTParty
 

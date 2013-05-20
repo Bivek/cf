@@ -1,4 +1,4 @@
-module GetHumanoid
+module CF
   class Template
     attr_accessor :template_id, :name
 

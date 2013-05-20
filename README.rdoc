@@ -1,12 +1,12 @@
-== Humanoid REST API Wrapper for Ruby
+== CloudFactory REST API Wrapper for Ruby
 
-Welcome to Humanoid, the easiest way to get work done without the hassle of hiring and managing a workforce. Design a task, and we’ll send it to our 30,000+ person workforce. Our innovative software ensures that you receive quality results quickly and inexpensively.
+Welcome to CloudFactory, the easiest way to get digitization work done without the hassle of hiring and managing a workforce. Design a task, and we’ll send it to our 3,000+ person highly trained workforce. Our innovative software ensures that you receive desired accuracy at cost.
 
-This Ruby gem wraps our simple REST API to make sending work and receiving results even easier.  For further details, you can read our {API documentation}[https://gethumanoid.com/v3/docs/tasks].
+This Ruby gem wraps our simple REST API to make sending work and receiving results even easier.  For further details, you can read our {API documentation}[https://cloudfactory.com/api/docs].
 
 == Getting Started
 
-First, you'll need to initialize an instance of the GetHumanoid class with your configuration details.  You can find your public and private key on your {account page}[https://gethumanoid.com/account].  For example:
+First, you'll need to initialize an instance of the CloudFactory class with your configuration details.  You can find your public and private key on your {account page}[https://cloudfactory.com/account].  For example:
 
     config = {
       'public_key'   => 'foo',
@@ -14,19 +14,19 @@ First, you'll need to initialize an instance of the GetHumanoid class with your 
       'callback_url' => 'http://send.me/results,
     }
 
-    client = GetHumanoid::Client.new(config)
+    client = CF::Client.new(config)
 
-That's it!  Now you're ready to use Humanoid.
+That's it!  Now you're ready to use CloudFactory.
 
-If you're using Rails, you'll want to put this in an initializer and store your config in a standard rails config YAML file.  An example config/initializers/humanoid.rb might contain:
+If you're using Rails, you'll want to put this in an initializer and store your config in a standard rails config YAML file.  An example config/initializers/cloudfactory.rb might contain:
 
-    config = YAML.load_file("#{Rails.root}/config/humanoid.yml")[Rails.env]
-    
-    HUMANOID = GetHumanoid::Client.new(config)
+    config = YAML.load_file("#{Rails.root}/config/cloudfactory.yml")[Rails.env]
+
+    CF = CF::Client.new(config)
 
 == Usage
 
-After creating a template on https://gethumanoid.com, you'll be able to send work and receive results via our API.  To fetch a list of your templates, simply call:
+After creating a template on https://cloudfactory.com, you'll be able to send work and receive results via our API.  To fetch a list of your templates, simply call:
 
     client.templates
 
@@ -45,13 +45,13 @@ Now you're ready to send data to our workers.  Let's assume you want them to tag
 
 To create a task using your template, just call:
 
-    GetHumanoid::Task.create(
+    CF::Task.create(
       client,
       template_id,
       resources
     )
 
-You can find the template ID on the {templates page}[https://gethumanoid.com/templates].  When your task is complete, Humanoid will POST your results to the callback URL specified in your initial config.  You can read further about this process over on our {API documentation}[https://gethumanoid.com/v3/docs/tasks].
+You can find the template ID on the {templates page}[https://cloudfactory.com/templates].  When your task is complete, CloudFactory will POST your results to the callback URL specified in your initial config.  You can read further about this process over on our {API documentation}[https://cloudfactory.com/api/docs/tasks].
 
 == Copyright
-Copyright (c) 2012 Speakertext, Inc.
+Copyright (c) 2012 CloudFactory, Inc.

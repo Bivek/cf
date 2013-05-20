@@ -1,0 +1,5 @@
+require "cf/version"
+require "cf/errors"
+require "cf/client"
+require "cf/task"
+require "cf/template"

@@ -1,7 +1,7 @@
-module GetHumanoid
+module CF
   class Task
     attr_accessor :task_id, :template_id, :status, :started_at
-    
+
     def initialize(task_id, template_id, status, started_at)
       @task_id    = task_id
       @template   = template_id
@@ -19,7 +19,8 @@ module GetHumanoid
         :sandbox      => sandbox,
       }
 
-      response = client.class.post('/tasks', :query => post_data).parsed_response
+      #query doesn't support large paylod
+      response = client.class.post('/tasks', :body => post_data).parsed_response
 
       return Task.new(
         response['task_id'],

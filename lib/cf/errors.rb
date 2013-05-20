@@ -1,4 +1,4 @@
-module GetHumanoid
+module CF
   class Error < StandardError
     attr_reader :code, :status
 
