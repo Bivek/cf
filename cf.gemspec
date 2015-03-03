@@ -3,10 +3,10 @@ $:.push File.expand_path("../lib", __FILE__)
 require "cf/version"
 
 Gem::Specification.new do |s|
-  s.name        = "cf"
+  s.name        = 'cf'
   s.version     = CF::VERSION
   s.authors     = ['Jason Snell', 'Bardan Rana']
-  s.email       = ['jason.snell@cloudfactory.com", 'bardan@cloudfactory.com']
+  s.email       = ['jason.snell@cloudfactory.com', 'bardan@cloudfactory.com']
   s.homepage    = 'https://cloudfactory.com'
   s.summary     = 'Unofficial CF Gem'
   s.description = 'CloudFactory is an on-demand human workforce API'
