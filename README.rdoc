@@ -1,4 +1,4 @@
-== CloudFactory REST API Wrapper for Ruby
+== Unofficial CloudFactory REST API Wrapper for Ruby
 
 Welcome to CloudFactory, the easiest way to get digitization work done without the hassle of hiring and managing a workforce. Design a task, and we’ll send it to our 3,000+ person highly trained workforce. Our innovative software ensures that you receive desired accuracy at cost.
 
@@ -54,4 +54,4 @@ To create a task using your template, just call:
 You can find the template ID on the {templates page}[https://cloudfactory.com/templates].  When your task is complete, CloudFactory will POST your results to the callback URL specified in your initial config.  You can read further about this process over on our {API documentation}[https://cloudfactory.com/api/docs/tasks].
 
 == Copyright
-Copyright (c) 2012 CloudFactory, Inc.
+Copyright (c) 2007 CloudFactory, Inc.
