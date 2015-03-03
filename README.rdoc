@@ -11,7 +11,7 @@ First, you'll need to initialize an instance of the CloudFactory class with your
     config = {
       'public_key'   => 'foo',
       'private_key'  => 'bar,
-      'callback_url' => 'http://send.me/results,
+      'callback_url' => 'http://send.me/results',
     }
 
     client = CF::Client.new(config)
